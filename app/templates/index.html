@@ -1,8 +1,38 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 
 <head>
-    <title>Python Dashboard</title>
+    <!--<title>Python Dashboard</title>-->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://unpkg.com/tailwindcss@^1.0/dist/tailwind.min.css" rel="stylesheet">
+
+    <header class="text-gray-700 body-font">
+        <div class="container mx-auto flex flex-wrap p-5 flex-col md:flex-row items-center">
+            <nav class="flex lg:w-2/5 flex-wrap items-center text-base md:ml-auto">
+                <!--<a class="mr-5 hover:text-gray-900">First Link</a>
+                <a class="hover:text-gray-900">Fourth Link</a>-->
+            </nav>
+            <a
+                class="flex order-first lg:order-none lg:w-1/5 title-font font-medium items-center text-gray-900 lg:items-center lg:justify-center mb-4 md:mb-0">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-linecap="round"
+                    stroke-linejoin="round" stroke-width="2" class="w-10 h-10 text-white p-2 bg-pink-500 rounded-full"
+                    viewBox="0 0 24 24">
+                    <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"></path>
+                </svg>
+                <span class="ml-3 text-xl">SanketLife MV2</span>
+            </a>
+            <div class="lg:w-2/5 inline-flex lg:justify-end ml-5 lg:ml-0">
+                <!--<button
+                    class="inline-flex items-center bg-gray-200 border-0 py-1 px-3 focus:outline-none hover:bg-gray-300 rounded text-base mt-4 md:mt-0">Button
+                    <svg fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
+                        stroke-width="2" class="w-4 h-4 ml-1" viewBox="0 0 24 24">
+                        <path d="M5 12h14M12 5l7 7-7 7"></path>
+                    </svg>
+                </button>-->
+            </div>
+        </div>
+    </header>
     <style>
         th,
         td,
@@ -24,46 +54,71 @@
             font-weight: bold;
         }
     </style>
+
 </head>
 
 <body>
-    <div id="Block1_collection">
-        <!-- Select collections from database to proceed further -->
-        <h3> Select from collections: </h3>
-        <form>
-            <select name="selectform" id="res" method="GET" action="/">
-                {% for coll in collections %}
-                <option value="{{coll}}" SELECTED>{{coll}}</option>"
-                {% endfor %}
-            </select>
-            <a id="demo" onclick="selectCollection()" class="button execute" name="submit" value="submit">Submit</a>
-        </form>
-    </div>
-
-    <div id="Block2_macid">
-        <!-- Select macId from collection to proceed further -->
-        <h3> Select from MAC IDs: </h3>
-        <form>
-            <select name="selectform" id="mac" method="GET" action="/">
-
-            </select>
-            <a id="demo" onclick="selectMacID()" class="button execute" name="submit" value="submit">Submit</a>
-        </form>
-    </div>
-
-    <div id="Block3_showTable">
-        <!-- Showcase further data -->
-        <p id="showData"></p>
-    </div>
-
     <script src="https://www.gstatic.com/charts/loader.js"></script>
-    <!--<div id="Block4_showChart">-->
-    <div id="drawChart">
-        <!-- Showcase further data 
-        
-            <p id="drawChart"></p>
-        -->
-    </div>
+
+    <section class="text-gray-700 body-font">
+        <div class="container px-10 py-10 mx-auto">
+            <div class="flex items-center lg:w-2/5 mx-auto border-b pb-10 mb-10 border-gray-200 sm:flex-row flex-col">
+                <div class="flex-grow sm:text-left text-center mt-6 sm:mt-0">
+                    <!-- Select collections from database to proceed further -->
+                    <h2 class="text-gray-900 text-lg title-font font-medium mb-2">Select from Collections:</h2>
+                    <div id="Block1_collection">
+                        <form>
+                            <select name="selectform" id="res" method="GET" action="/">
+                                {% for coll in collections %}
+                                <option value="{{coll}}" SELECTED>{{coll}}</option>"
+                                {% endfor %}
+                            </select>
+                            <a id="demo" onclick="selectCollection()" class="button execute" name="submit"
+                                value="submit">Submit</a>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <div class="flex items-center lg:w-2/5 mx-auto border-b pb-10 mb-10 border-gray-200 sm:flex-row flex-col">
+                <div class="flex-grow sm:text-left text-center mt-6 sm:mt-0">
+                    <!-- Select macId from collection to proceed further -->
+                    <h2 class="text-gray-900 text-lg title-font font-medium mb-2">Select MAC IDs:</h2>
+                    <div id="Block2_macid">
+                        <form>
+                            <select name="selectform" id="mac" method="GET" action="/">
+
+                            </select>
+                            <a id="demo" onclick="selectMacID()" class="button execute" name="submit"
+                                value="submit">Submit</a>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <!--<button
+                class="flex mx-auto mt-20 text-white bg-indigo-500 border-0 py-2 px-8 focus:outline-none hover:bg-indigo-600 rounded text-lg">Button</button>-->
+        </div>
+    </section>
+
+    <section class="text-gray-700 body-font overflow-hidden">
+        <div class="container px-5 py-10 mx-auto">
+            <div class="flex flex-wrap -m-12">
+                <div class="p-12 md:w-1/2 flex flex-col">
+                    <h2 class="sm:text-3xl text-2xl title-font font-medium text-gray-900 mt-4 mb-4">Table</h2>
+                    <div id="Block3_showTable">
+                        <!-- Showcase further data -->
+                        <p id="showData"></p>
+                    </div>
+                </div>
+                <div class="p-12 md:w-1/2 flex flex-col">
+                    <h2 class="sm:text-3xl text-2xl title-font font-medium text-gray-900 mt-4 mb-4">Chart</h2>
+                    <!--<div id="Block4_showChart">-->
+                    <div id="drawChart">
+                        <!-- Showcase further data <p id="drawChart"></p>-->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
 
 </body>
 
@@ -132,7 +187,17 @@
                 console.log(result)
                 console.log(result.otherSeries)
                 CreateTableFromJSON(result)
-                drawBackgroundColor(result.otherSeries)
+
+                if (result.systolicSeries.length != 0) {
+                    console.log("Systolic:", result.systolicSeries.length)
+                    drawBackgroundColor2(result.otherSeries)
+                    //drawBackgroundColor(result.systolicSeries)
+                    //drawBackgroundColor(result.diastolicSeries)
+
+                } else {
+                    console.log("Other:", result.otherSeries.length)
+                    drawBackgroundColor(result.otherSeries)
+                }
 
             })
             .catch(error => console.log('error', error));
@@ -194,7 +259,33 @@
 
     function drawBackgroundColor(e) {
         var c = e;
-        console.log(typeof(c))
+        console.log(typeof (c))
+        console.log(c)
+
+        var data = new google.visualization.DataTable();
+        data.addColumn('number', 'Index');
+        data.addColumn('number', 'Diastolic');
+        data.addColumn('number', 'Systolic');
+
+        data.addRows(c);
+
+        var options = {
+            hAxis: {
+                title: 'MV2'
+            },
+            vAxis: {
+                title: 'Value'
+            },
+            backgroundColor: '#f1f8e9'
+        };
+
+        var chart = new google.visualization.LineChart(document.getElementById('drawChart'));
+        chart.draw(data, options);
+    }
+
+    function drawBackgroundColor2(e) {
+        var c = e;
+        console.log(typeof (c))
         console.log(c)
 
         var data = new google.visualization.DataTable();

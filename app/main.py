@@ -1,12 +1,8 @@
 from flask import Flask, jsonify, request
 from flask import Flask, request, Response, render_template
 from flask_pymongo import PyMongo
+from pymongo.errors import ConnectionFailure, AutoReconnect
 import json
-#from flask_mongoengine import MongoEngine
-#from pymongo import MongoClient
-
-#from database.db import initialize_db
-#from database.models import bps, sugars, spo2, temps
 
 app = Flask(__name__)
 
@@ -20,12 +16,16 @@ mongo = PyMongo(app)
 @app.route('/', methods=['GET','POST'])
 def hello():
     if request.method == 'GET':
-        coll = mongo.db.collection_names()
+        try:
+            coll = mongo.db.collection_names()
+        except AutoReconnect:
+            coll = mongo.db.collection_names()
+            #mongo = PyMongo(app)
         return render_template("index.html", collections=coll)
     elif request.method == 'POST':
         data = request.get_json()
         if data['Block'] == 1:
-            print 'Block1: ',data, '\n'
+            print 'Block1: Fetched ', data, '\n'
             macID = mongo.db[data['select_col']].distinct('macId')
             print data['select_col'], macID
 
@@ -36,7 +36,7 @@ def hello():
 
             recrds = mongo.db[data['select_col']].find({'macId':data['select_mac']}).sort([('_id', -1)])
             recrds_data = [i for i in recrds]
-            print 'Block2: Fetched ', data['select_col'], len(recrds_data), recrds_data, '\n'
+            print 'Block2: Fetched ', data['select_col'], len(recrds_data), '\n'
 
 
             payload_data = []
@@ -53,7 +53,9 @@ def hello():
                         'Name': recrds_data[rw]['name'] if 'name' in recrds_data[rw].keys() else '', 
                         'Email': recrds_data[rw]['email'] if 'email' in recrds_data[rw].keys() else ''
                         })
-                    #systolicSeries.sppend([,rw])
+                    #systolicSeries.insert(0, [rw, recrds_data[rw]['diastolic']])
+                    #diastolicSeries.insert(0, [rw, recrds_data[rw]['systolic']])
+                    otherSeries.insert(0, [rw, recrds_data[rw]['diastolic'],recrds_data[rw]['systolic']])
                 else:
                     key = collection_key_value[ data['select_col'] ]
                     payload_data.append({
@@ -62,14 +64,27 @@ def hello():
                         'Name': recrds_data[rw]['name'] if 'name' in recrds_data[rw].keys() else '', 
                         'Email': recrds_data[rw]['email'] if 'email' in recrds_data[rw].keys() else ''
                         })
-                    otherSeries.append([rw, recrds_data[rw][key]])
+                    otherSeries.insert(0, [rw, recrds_data[rw][key]])
+
+            for i in range(len(otherSeries)):
+                otherSeries[i][0] = i
+
+            
+
+            """for rw in range(len(recrds_data),-1,-1):
+                key = collection_key_value[ data['select_col'] ]
+                otherSeries.insert(0, [rw, recrds_data[rw][key]])"""
 
             payload_object = {
                 'macId': data['select_mac'],
                 'data':payload_data,
-                'otherSeries':otherSeries
+                'otherSeries':otherSeries,
+                'diastolicSeries':diastolicSeries,
+                'systolicSeries':systolicSeries
             }
-            print payload_object
+            
+            print otherSeries
+            # print payload_object
 
             return payload_object
         
