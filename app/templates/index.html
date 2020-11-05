@@ -188,15 +188,13 @@
                 console.log(result.otherSeries)
                 CreateTableFromJSON(result)
 
-                if (result.systolicSeries.length != 0) {
-                    console.log("Systolic:", result.systolicSeries.length)
-                    drawBackgroundColor2(result.otherSeries)
-                    //drawBackgroundColor(result.systolicSeries)
-                    //drawBackgroundColor(result.diastolicSeries)
+                if (result.diasysSeries.length != 0) {
+                    console.log("Diastolic-Systolic:", result.diasysSeries.length)
+                    drawBackgroundColor(result.diasysSeries)
 
                 } else {
                     console.log("Other:", result.otherSeries.length)
-                    drawBackgroundColor(result.otherSeries)
+                    drawBackgroundColor2(result.otherSeries)
                 }
 
             })

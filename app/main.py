@@ -40,11 +40,9 @@ def hello():
 
 
             payload_data = []
-            systolicSeries = []
-            diastolicSeries = []
+            diasysSeries = []
             otherSeries = []
             for rw in range(len(recrds_data)):
-                #payload_data = [{'Reading':i[key], 'Timestamp':i['createdTs'], 'Name':i['name'] if 'name' in i.keys() else '', 'Email':i['email'] if 'email' in i.keys() else ''} for i in recrds_data]
                 if data['select_col'] == 'bps':
                     payload_data.append({
                         'Timestamp': recrds_data[rw]['createdTs'], 
@@ -53,9 +51,7 @@ def hello():
                         'Name': recrds_data[rw]['name'] if 'name' in recrds_data[rw].keys() else '', 
                         'Email': recrds_data[rw]['email'] if 'email' in recrds_data[rw].keys() else ''
                         })
-                    #systolicSeries.insert(0, [rw, recrds_data[rw]['diastolic']])
-                    #diastolicSeries.insert(0, [rw, recrds_data[rw]['systolic']])
-                    otherSeries.insert(0, [rw, recrds_data[rw]['diastolic'],recrds_data[rw]['systolic']])
+                    diasysSeries.insert(0, [rw, recrds_data[rw]['diastolic'],recrds_data[rw]['systolic']])
                 else:
                     key = collection_key_value[ data['select_col'] ]
                     payload_data.append({
@@ -66,25 +62,22 @@ def hello():
                         })
                     otherSeries.insert(0, [rw, recrds_data[rw][key]])
 
-            for i in range(len(otherSeries)):
-                otherSeries[i][0] = i
+            if len(otherSeries) != []:
+                for i in range(len(otherSeries)):
+                    otherSeries[i][0] = i
 
-            
-
-            """for rw in range(len(recrds_data),-1,-1):
-                key = collection_key_value[ data['select_col'] ]
-                otherSeries.insert(0, [rw, recrds_data[rw][key]])"""
+            if len(diasysSeries) != []:
+                for i in range(len(diasysSeries)):
+                    diasysSeries[i][0] = i
 
             payload_object = {
                 'macId': data['select_mac'],
                 'data':payload_data,
                 'otherSeries':otherSeries,
-                'diastolicSeries':diastolicSeries,
-                'systolicSeries':systolicSeries
+                'diasysSeries':diasysSeries
             }
             
-            print otherSeries
-            # print payload_object
+            print otherSeries #, payload_object
 
             return payload_object
         
