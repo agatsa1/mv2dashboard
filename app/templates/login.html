@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <!--<title>Python Dashboard</title>-->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://unpkg.com/tailwindcss@^1.0/dist/tailwind.min.css" rel="stylesheet">
+
+    <header class="text-gray-700 body-font">
+        <div class="container mx-auto flex flex-wrap p-5 flex-col md:flex-row items-center">
+            <nav class="flex lg:w-2/5 flex-wrap items-center text-base md:ml-auto">
+                <!--<a class="mr-5 hover:text-gray-900">First Link</a>
+                <a class="hover:text-gray-900">Fourth Link</a>-->
+            </nav>
+            <a
+                class="flex order-first lg:order-none lg:w-1/5 title-font font-medium items-center text-gray-900 lg:items-center lg:justify-center mb-4 md:mb-0">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-linecap="round"
+                    stroke-linejoin="round" stroke-width="2" class="w-10 h-10 text-white p-2 bg-pink-500 rounded-full"
+                    viewBox="0 0 24 24">
+                    <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"></path>
+                </svg>
+                <span class="ml-3 text-xl">SanketLife MV2</span>
+            </a>
+            <div class="lg:w-2/5 inline-flex lg:justify-end ml-5 lg:ml-0">
+                <!--<button
+                    class="inline-flex items-center bg-gray-200 border-0 py-1 px-3 focus:outline-none hover:bg-gray-300 rounded text-base mt-4 md:mt-0">Button
+                    <svg fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
+                        stroke-width="2" class="w-4 h-4 ml-1" viewBox="0 0 24 24">
+                        <path d="M5 12h14M12 5l7 7-7 7"></path>
+                    </svg>
+                </button>-->
+            </div>
+        </div>
+    </header>
+    <style>
+        th,
+        td,
+        p,
+        input {
+            font: 14px Verdana;
+        }
+
+        table,
+        th,
+        td {
+            border: solid 1px #DDD;
+            border-collapse: collapse;
+            padding: 2px 3px;
+            text-align: center;
+        }
+
+        th {
+            font-weight: bold;
+        }
+    </style>
+
+</head>
+
+<body>
+
+    <!--
+     Old Login 
+    <div class="container">
+        <div class="row">
+            <div class="col">
+                <h1>Login</h1>
+                <hr>
+                <form method="POST">
+                    enctype="multipart/form-data" action="/login">
+                    <div class="form-group">
+                        <label>Enter login credentials:</label>
+                        <div class="custom-file">
+                            <input type="username" name="username" id="username" , placeholder="Username">
+                            <br>
+                            <input type="password" name="password" id="password" , placeholder="Password">
+                            <br>
+                        </div>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Login</button>
+                    {% if feedback %}
+                    <p class="text-danger float-right">{{ feedback }}</p>
+                    {% endif %}
+                </form>
+            </div>
+        </div>
+    </div>-->
+
+    <!-- Login Section Tailwind CSS -->
+    <section class="text-gray-700 body-font relative">
+        <div class="container px-5 py-24 mx-auto">
+            <div class="flex flex-col text-center w-full mb-12">
+                <h1 class="sm:text-3xl text-2xl font-medium title-font mb-4 text-gray-900">Login</h1>
+                <p class="lg:w-2/3 mx-auto leading-relaxed text-base">The desired page will not load without logging-in.
+                </p>
+            </div>
+            <div class="lg:w-1/4 md:w-1/4 mx-auto">
+                <div class="flex flex-wrap -m-2">
+
+                    <form method="POST">
+                        <div class="p-2 w-full">
+                            <div class="relative">
+                                <label for="username" class="leading-7 text-sm text-gray-600">Username</label>
+                                <input type="text" id="username" name="username"
+                                    class="w-full bg-gray-100 rounded border border-gray-300 focus:border-indigo-500 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out">
+                            </div>
+                        </div>
+                        <div class="p-2 w-full">
+                            <div class="relative">
+                                <label for="password" class="leading-7 text-sm text-gray-600">Password</label>
+                                <input type="password" id="password" name="password"
+                                    class="w-full bg-gray-100 rounded border border-gray-300 focus:border-indigo-500 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out">
+                            </div>
+                        </div>
+                        <div class="p-2 w-full">
+                            <button type="submit"
+                                class="flex mx-auto text-white bg-indigo-500 border-0 py-2 px-8 focus:outline-none hover:bg-indigo-600 rounded text-lg">Login</button>
+                        </div>
+
+                        {% if feedback %}
+                        <p class="lg:w-2/3 mx-auto leading-relaxed text-base">{{ feedback }}</p>
+                        {% endif %}
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+</body>
+
+</html>

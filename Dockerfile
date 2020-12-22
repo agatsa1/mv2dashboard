@@ -1,4 +1,4 @@
-FROM tiangolo/uwsgi-nginx-flask:flask #:python2.7
+FROM tiangolo/uwsgi-nginx-flask:flask 
 #-python2.7
 
 MAINTAINER Prashant Gupta <prashant.gupta@agatsa.com>
