@@ -37,6 +37,7 @@ class User:
 
 users = []
 users.append(User(username='pg',name='Prashant',password='notadmin'))
+users.append(User(username='agatsa',name='Admin',password='agatsa@57'))
 
 @app.before_request
 def before_request():
@@ -62,7 +63,7 @@ def login():
     feedback = ""
     if request.method == "GET":
         session.pop('user_id',None)
-        
+
         return render_template("login.html")
     
     elif request.method == "POST":
