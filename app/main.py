@@ -116,18 +116,18 @@ def index():
 
         data = request.get_json()
         if data['Block'] == 1:
-            print 'Block1: Fetched ', data, '\n'
+            print('Block1: Fetched ', data, '\n')
             macID = mongo.db[data['select_col']].distinct('macId')
-            print data['select_col'], macID
+            print(data['select_col'], macID)
 
             return json.dumps({'macId':list(macID)}) # Response(list(macID),  mimetype='application/json')
         elif data['Block'] == 2:
-            print 'Block2: ',data, '\n'
+            print('Block2: ',data, '\n')
             collection_key_value = {    'sugars':'sugar',   'temps':'temp', 'spo2':'spo2'   }
 
             recrds = mongo.db[data['select_col']].find({'macId':data['select_mac']}).sort([('_id', -1)])
             recrds_data = [i for i in recrds]
-            print 'Block2: Fetched ', data['select_col'], len(recrds_data), '\n'
+            print('Block2: Fetched ', data['select_col'], len(recrds_data), '\n')
 
 
             payload_data = []
@@ -137,8 +137,9 @@ def index():
                 if data['select_col'] == 'bps':
                     payload_data.append({
                         'Timestamp': recrds_data[rw]['createdTs'], 
-                        'Reading - Diastolic': recrds_data[rw]['diastolic'], 
-                        'Reading - Systolic': recrds_data[rw]['systolic'], 
+                        'Reading - Diastolic': recrds_data[rw]['diastolic'],
+                        'Reading - Systolic': recrds_data[rw]['systolic'],
+                        'Firmware Version': recrds_data[rw]['systolicArray'],
                         'Name': recrds_data[rw]['name'] if 'name' in recrds_data[rw].keys() else '', 
                         'Email': recrds_data[rw]['email'] if 'email' in recrds_data[rw].keys() else ''
                         })
@@ -168,7 +169,7 @@ def index():
                 'diasysSeries':diasysSeries
             }
             
-            print otherSeries #, payload_object
+            print(otherSeries) #, payload_object
 
             return payload_object
         else:
@@ -177,7 +178,7 @@ def index():
 @app.route('/result', methods=["POST"])
 @cross_origin()
 def result():
-    print request.form
+    print(request.form)
     return render_template("result.html")
 
 if __name__ == "__main__":

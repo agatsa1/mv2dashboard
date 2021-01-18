@@ -23,7 +23,8 @@
                 <span class="ml-3 text-xl">SanketLife MV2</span>
             </a>
             <div class="lg:w-2/5 inline-flex lg:justify-end ml-5 lg:ml-0">
-                <a href=login ><button class="flex ml-auto text-white bg-indigo-500 border-0 py-2 px-6 focus:outline-none hover:bg-indigo-600 rounded">Logout</button></a>
+                <a href=login><button
+                        class="flex ml-auto text-white bg-indigo-500 border-0 py-2 px-6 focus:outline-none hover:bg-indigo-600 rounded">Logout</button></a>
                 <!--<button
                     class="inline-flex items-center bg-gray-200 border-0 py-1 px-3 focus:outline-none hover:bg-gray-300 rounded text-base mt-4 md:mt-0">Button
                     <svg fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
@@ -75,8 +76,9 @@
                                 <option value="{{coll}}" SELECTED>{{coll}}</option>"
                                 {% endfor %}
                             </select>
-                            <a id="demo" onclick="selectCollection()" class="flex mx-auto text-white bg-indigo-500 border-0 py-2 px-8 focus:outline-none hover:bg-indigo-600 rounded text-lg" name="submit"
-                                value="submit">Submit</a>
+                            <a id="demo" onclick="selectCollection()"
+                                class="flex mx-auto text-white bg-indigo-500 border-0 py-2 px-8 focus:outline-none hover:bg-indigo-600 rounded text-lg"
+                                name="submit" value="submit">Submit</a>
                         </form>
                     </div>
                 </div>
@@ -85,14 +87,25 @@
             <div class="flex items-center lg:w-2/5 mx-auto border-b pb-10 mb-10 border-gray-200 sm:flex-row flex-col">
                 <div class="flex-grow sm:text-left text-center mt-6 sm:mt-0">
                     <!-- Select macId from collection to proceed further -->
-                    <h2 class="text-gray-900 text-lg title-font font-medium mb-2">Select MAC IDs:</h2>
                     <div id="Block2_macid">
+                        <h2 class="text-gray-900 text-lg title-font font-medium mb-2">Select MAC IDs:</h2>
                         <form>
                             <select name="selectform" id="mac" method="GET" action="/">
 
                             </select>
-                            <a id="demo" onclick="selectMacID()" class="flex mx-auto text-white bg-indigo-500 border-0 py-2 px-8 focus:outline-none hover:bg-indigo-600 rounded text-lg" name="submit"
-                                value="submit">Submit</a>
+                            <a id="demo" onclick="selectMacID()"
+                                class="flex mx-auto text-white bg-indigo-500 border-0 py-2 px-8 focus:outline-none hover:bg-indigo-600 rounded text-lg"
+                                name="submit" value="submit">Submit</a>
+                        </form>
+                        <br>
+                        <h2 class="text-gray-900 text-lg title-font font-medium mb-2">Search MAC IDs:</h2>
+                        <form>
+                            <!-- Search Bar -->
+                            <input type="text" id="mac2" name="selectform"
+                                class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-indigo-500 focus:bg-transparent focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out">
+                            <a id="demo" onclick="selectMacID2()"
+                                class="flex mx-auto text-white bg-indigo-500 border-0 py-2 px-8 focus:outline-none hover:bg-indigo-600 rounded text-lg"
+                                name="submit" value="submit">Submit</a>
                         </form>
                     </div>
                 </div>
@@ -203,6 +216,50 @@
             })
             .catch(error => console.log('error', error));
     }
+
+    function selectMacID2() {
+
+        var myHeaders = new Headers();
+        myHeaders.append("Content-Type", "application/json");
+        selectMac = document.getElementById("mac2");
+        console.log(selectMac.value)
+
+        var raw = JSON.stringify({
+            "select_col": selectColl.value,
+            "select_mac": selectMac.value,
+            "Block": 2
+        });
+
+        var requestOptions = {
+            method: 'POST',
+            headers: myHeaders,
+            body: raw,
+            redirect: 'follow'
+        };
+
+        fetch("/", requestOptions)
+            .then(response => response.text())
+            .then(result => {
+                result = JSON.parse(result)
+                console.log(selectColl.value)
+                console.log(selectMac.value)
+                console.log(result)
+                console.log(result.otherSeries)
+                CreateTableFromJSON(result)
+
+                if (result.diasysSeries.length != 0) {
+                    console.log("Diastolic-Systolic:", result.diasysSeries.length)
+                    drawBackgroundColor(result.diasysSeries)
+
+                } else {
+                    console.log("Other:", result.otherSeries.length)
+                    drawBackgroundColor2(result.otherSeries)
+                }
+
+            })
+            .catch(error => console.log('error', error));
+    }
+
 
     function CreateTableFromJSON(e) {
         var receivedData = e
